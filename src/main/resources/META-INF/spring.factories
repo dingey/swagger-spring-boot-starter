@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.dingey.swagger.SwaggerAutoConfiguration
+  com.github.dingey.swagger.GatewaySwaggerAutoConfiguration,\
+  com.github.dingey.swagger.SwaggerAutoConfiguration,\
+  com.github.dingey.swagger.ZuulGatewayAutoConfiguration

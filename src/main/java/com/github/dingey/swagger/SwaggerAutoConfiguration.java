@@ -5,11 +5,11 @@ import com.google.common.base.Predicates;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -21,7 +21,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.annotation.PostConstruct;
@@ -39,6 +38,7 @@ import java.util.stream.Stream;
  */
 @EnableSwagger2
 @Configuration
+@ConditionalOnClass(name = "org.springframework.web.servlet.HandlerMapping")
 @ConditionalOnProperty(value = "swagger.enable", matchIfMissing = true)
 @EnableConfigurationProperties({SwaggerProperties.class})
 public class SwaggerAutoConfiguration {
@@ -126,12 +126,5 @@ public class SwaggerAutoConfiguration {
             references.add(new SecurityReference(keyYML.getName(), authorizationScopes));
         }
         return references;
-    }
-
-    @Bean
-    @Primary
-    @ConditionalOnProperty("swagger.resources[0].name")
-    public SwaggerResourcesProvider swaggerResourcesProvider() {
-        return swaggerProperties::getResources;
     }
 }
