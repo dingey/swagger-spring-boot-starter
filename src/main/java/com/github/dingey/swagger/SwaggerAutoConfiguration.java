@@ -75,7 +75,7 @@ public class SwaggerAutoConfiguration {
         } else if (swaggerProperties.getPaths() != null && swaggerProperties.getPaths().length > 0) {
             List<Predicate<String>> predicates = Stream.of(swaggerProperties.getPaths()).map(PathSelectors::regex).collect(Collectors.toList());
             builder.paths(Predicates.or(predicates));
-        } else {
+        } else if (!swaggerProperties.isAll()) {
             builder.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class));
         }
         docket = builder.build();

@@ -63,4 +63,8 @@ class SwaggerProperties {
      * which class type ignore in method parameter
      */
     private List<Class> ignoreTypes;
+    /**
+     * enable all url path add to swagger
+     */
+    private boolean all = true;
 }
